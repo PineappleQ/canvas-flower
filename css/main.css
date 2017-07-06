@@ -1,0 +1,8 @@
+#canvas{
+    background-color: #ED5565;
+}
+html,body{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
