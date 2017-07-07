@@ -7,9 +7,9 @@
     var radian;//弧度  
     var i;
     var radianDecrement;//弧度增量  
-    var time = 10;//每个点之间的时间间隔  
+    var time = 50;//每个点之间的时间间隔  
     var intervalId;
-    var num = 360;//分割为 360 个点  
+    var num = 90;//分割为 360 个点  
     var startRadian = Math.PI;
     function Flower(x, y, r, ctrlHeight, color) {
         this.x = x;
@@ -25,9 +25,7 @@
         WINDOW_WIDTH = document.documentElement.clientWidth;
         canvas.width = WINDOW_WIDTH;
         canvas.height = WINDOW_HEIGHT;
-        // drawHeart();
-        var flower = createFlower();
-        flower.draw();
+        drawHeart();
     }
 
     Flower.prototype.draw = function () {
@@ -47,10 +45,8 @@
         ctx.restore();
     }
 
-    function createFlower() {
-        var x = canvas.width / 2;
-        var y = canvas.height / 2;
-        var r = 10;
+    function createFlower(x, y) {
+        var r = Math.random() * 5 + 5;
         var ctrlHeight = r * 2;
         var color = colors[Math.floor(Math.random() * colors.length)];
         var flower = new Flower(x, y, r, ctrlHeight, color);
@@ -113,27 +109,30 @@
 
     function drawHeart() {
 
-        ctx.strokeStyle = "#ED5565";
-        ctx.lineWidth = 1;//设置线的宽度  
+        // ctx.strokeStyle = "#ED5565";
+        // ctx.lineWidth = 1;//设置线的宽度  
         radian = startRadian;//弧度设为初始弧度  
         radianDecrement = Math.PI / num * 2;
-        ctx.moveTo(getX(radian), getY(radian));//移动到初始点  
+        // ctx.moveTo(getX(radian), getY(radian));//移动到初始点 
+        var flower = createFlower(getX(radian), getY(radian));
+        flower.draw();
         i = 0;
         intervalId = setInterval(printHeart, time);
     }
 
     function printHeart() {
         radian += radianDecrement;
-        ctx.lineTo(getX(radian), getY(radian));//在旧点和新点之间连线  
+        var flower = createFlower(getX(radian), getY(radian));//在旧点和新点之间连线  
         i++;
-        ctx.stroke();//画线  
+        // ctx.stroke();//画线  
+        flower.draw();
         if (i >= num) {
             clearInterval(intervalId);
         }
     }
 
     function getX(t) {
-        return 100 + r * (16 * Math.pow(Math.sin(t), 3));
+        return 500 + r * (16 * Math.pow(Math.sin(t), 3));
     }
 
     function getY(t) {
